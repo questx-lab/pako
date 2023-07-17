@@ -6718,6 +6718,13 @@
         return true;
       }
 
+      // Flush if requested and has data
+      if (_flush_mode > 0 && strm.next_out > 0) {
+        this.onData(strm.output.subarray(0, strm.next_out));
+        strm.avail_out = 0;
+        continue;
+      }    
+
       if (strm.avail_in === 0) break;
     }
 
